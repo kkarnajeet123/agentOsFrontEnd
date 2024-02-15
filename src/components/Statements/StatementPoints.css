@@ -1,0 +1,29 @@
+th,
+td {
+  width: 1%;
+  padding: .5rem;
+  vertical-align: top;
+}
+
+th{
+  font-weight: bolder;
+  font-style: normal;
+  font-size: large;
+  font-variant-east-asian: ruby;
+}
+table{
+  margin-top: 5%;
+  height: fit-content;
+  margin-right: 10%;
+  padding: 20%;
+  text-align: center;
+  text-anchor: middle;
+  font-weight: bold;
+
+ }
+
+ h1{
+  color: aquamarine;
+ }
+
+
