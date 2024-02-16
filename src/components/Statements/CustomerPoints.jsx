@@ -1,60 +1,54 @@
 import React, { useEffect, useState } from 'react'
 
-const CustomerPoints = () => {
+function CustomerPoints() {
 
   const [response, setResponse] = useState([]);
 
-  const [customerId, setCustomerId] = useState();
+  const [customerId, setCustomerId] = useState('1');
+
+  const [total, setTotal] = useState();
+
+  const [mapdata, setMapData] =useState();
 
   const BASE_URL = 'http://localhost:9090/purchaseHistory/';
 
-  //const EACH_CUSTOMER_POINTS_API = BASE_URL + '2/total';
-
-  const fetchEachCustomerPointsApi = async (url) => {
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-      setResponse(data["data"]);
-        console.log("The response is: ",data["data"]);
-    } catch (e) {
-    //  console.error(e);
-    }
-  }
   useEffect(() => {
-   
-   try{
-    if(isNaN(customerId) || customerId=="" || customerId==null){
-      var custId="1";
-    console.log("Error in customerId");
-    }else{
-      custId =customerId.toString();
-      console.log("the customer id is: "+custId);
-    }
-  }catch(e){
-    console.error(e);
-  }
-   // var custId="3";
-    fetchEachCustomerPointsApi(BASE_URL+custId+'/total');
-  }, [])
+    fetchEachCustomerPointsApi()
+  }, []);
 
-  const handleCustomerIdChange = (event) => {
-    console.log("The even value is: ",event.target.value);
-    var eventCustomerId="";
-    switch (event.target.value){
-  case "0":
-    eventCustomerId="0";
-  case "1":
-    eventCustomerId="1";
-  case "2":
-    eventCustomerId="2";
-  default:
-    eventCustomerId="0";
-}
-    setCustomerId(eventCustomerId);
+  const fetchEachCustomerPointsApi = async () => {
+    try {
+      console.log(`${BASE_URL}${customerId}/total`)
+      const res = await fetch(`${BASE_URL}${customerId}/total`);
+      const data = await res.json();
+      console.log(data);
+      console.log("the point is: ",data["data"][1]);
+      setResponse(data["data"]);
+      let calculatedTotal =0;
+     
+       for(const point in data["data"][customerId]){
+
+           calculatedTotal += data["data"][customerId][month][point];
+       }
+      console.log("total point is:",calculatedTotal);
+      setTotal(calculatedTotal)
+    } catch (e) {
+      //  console.log(e);
+    }
+  }
+
+  const handleInputChange = (event) => {
+    console.log(event);
+    setCustomerId(event.target.value)
+  }
+
+  const handleCustomerIdChange = () => {
+    fetchEachCustomerPointsApi();
   };
 
-  const refreshCustomerTable=()=>{
-    response.reverse;
+  const refreshCustomerTable = () => {
+    setCustomerId('');
+    setResponse({});
   }
 
 
@@ -64,12 +58,12 @@ const CustomerPoints = () => {
         <a href='/'>
           <button type="button" className="btn btn-primary">Home</button>
         </a>
+        <span>{total}</span>
       </div>
       <div>
-       <input type="text" placeholder='Enter Customer Id' value ={customerId} onSubmit={handleCustomerIdChange}/>
-      <button  type="button" className="btn btn-success" 
-      onClick={handleCustomerIdChange}>Search</button>
-      <button type="button" className='btn btn-warning' onClick={refreshCustomerTable}>Refresh</button>
+        <input type="text" placeholder='Enter Customer Id' value={customerId} onChange={(event) => setCustomerId(event.target.value)} />
+        <button type="button" className="btn btn-success" onClick={handleCustomerIdChange}>Search</button>
+        <button type="button" className='btn btn-warning' onClick={refreshCustomerTable}>Reset</button>
       </div>
 
       <div className='container'>

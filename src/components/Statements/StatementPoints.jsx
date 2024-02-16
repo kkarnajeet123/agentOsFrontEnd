@@ -4,6 +4,7 @@ import '../Statements/StatementPoints.css'
 const StatementPoints = () => {
   const [response,setResponse] =useState([]);
   
+  
   const REST_API_URL= 'http://localhost:9090/purchaseHistory/allCustomer/total';
   
   const fetchAllCustomerTotalPointsApi = async(url)=>{

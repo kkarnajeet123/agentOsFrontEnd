@@ -9,7 +9,7 @@ th{
   font-weight: bolder;
   font-style: normal;
   font-size: large;
-  font-variant-east-asian: ruby;
+  font-variant-emoji: emoji;
 }
 table{
   margin-top: 5%;
