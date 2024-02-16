@@ -22,8 +22,29 @@ table{
 
  }
 
- h1{
-  color: aquamarine;
- }
+span{
+  margin-left: 53%;
+  font-size: larger;
+  font-weight: bolder;
+  background-color: rgb(197, 197, 232);
+}
+
+label{
+  background-color: beige;
+  font-weight: bolder;
+}
+
+#homeButton{
+  margin-bottom: 20%;
+}
+
+#inputPlace{
+  margin-right: 30%;
+  margin-bottom: 5%;
+}
+
+#resetButton{
+  margin-left: 10%;
+}
 
 

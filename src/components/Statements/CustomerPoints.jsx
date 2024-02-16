@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import '../Statements/StatementPoints.css'
 
 function CustomerPoints() {
 
@@ -26,9 +27,9 @@ function CustomerPoints() {
       setResponse(data["data"]);
       let calculatedTotal =0;
      
-       for(const point in data["data"][customerId]){
+       for(const month in data["data"][customerId]){
 
-           calculatedTotal += data["data"][customerId][month][point];
+           calculatedTotal += data["data"][customerId][month];
        }
       console.log("total point is:",calculatedTotal);
       setTotal(calculatedTotal)
@@ -40,6 +41,7 @@ function CustomerPoints() {
   const handleInputChange = (event) => {
     console.log(event);
     setCustomerId(event.target.value)
+    
   }
 
   const handleCustomerIdChange = () => {
@@ -49,6 +51,7 @@ function CustomerPoints() {
   const refreshCustomerTable = () => {
     setCustomerId('');
     setResponse({});
+    setTotal(0)
   }
 
 
@@ -56,18 +59,18 @@ function CustomerPoints() {
     <div>
       <div>
         <a href='/'>
-          <button type="button" className="btn btn-primary">Home</button>
+          <button type="button" className="btn btn-primary" id="homeButton">Home</button>
         </a>
-        <span>{total}</span>
+        
       </div>
       <div>
-        <input type="text" placeholder='Enter Customer Id' value={customerId} onChange={(event) => setCustomerId(event.target.value)} />
-        <button type="button" className="btn btn-success" onClick={handleCustomerIdChange}>Search</button>
-        <button type="button" className='btn btn-warning' onClick={refreshCustomerTable}>Reset</button>
+        <input id="inputPlace" type="text" placeholder='Enter Customer Id' value={customerId} onChange={(event) => setCustomerId(event.target.value)} />
+        <button type="button" className="btn btn-success" onClick={handleCustomerIdChange} id="searchButton" >Search</button>
+        <button type="button" className='btn btn-warning' onClick={refreshCustomerTable} id="resetButton">Reset</button>
       </div>
 
       <div className='container'>
-        <table className="table table-striped table-light" id="customerPoints">
+        <table className="table table-striped table-success" id="customerPoints">
           <thead>
             <tr>
               <th scope='col'>CustomerId</th>
@@ -90,11 +93,14 @@ function CustomerPoints() {
                   </tr>
                 ))
               })
-
+            
             }
 
           </tbody>
+          
         </table>
+        <label>Total Points:</label>
+        <span>{total}</span>
       </div>
     </div >
   )
